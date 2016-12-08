@@ -949,7 +949,7 @@ typedef NS_ENUM(NSInteger, MBXSettingsMiscellaneousRows) {
     MGLPolygonFeature *feature = [MGLPolygonFeature polygonWithCoordinates:leafCoords count:coordsCount];
     feature.identifier = @"leaf-feature";
     feature.attributes = @{@"color": @"red"};
-    
+
     MGLGeoJSONSource *source = [[MGLGeoJSONSource alloc] initWithIdentifier:@"leaf-source" shape:feature options:nil];
     [self.mapView.style addSource:source];
     

@@ -1,4 +1,5 @@
 #import "MGLFeature_Private.h"
+#import "MGLShapeCollectionFeature_Private.h"
 
 #import "MGLPointAnnotation.h"
 #import "MGLPolyline.h"
@@ -175,6 +176,15 @@
     [NSException raise:@"Method unavailable" format:@"%s is not available on %@.", __PRETTY_FUNCTION__, [self class]];
     mbgl::Polygon<double> geometry;
     return mbgl::Feature{geometry};
+}
+
+- (mbgl::FeatureCollection)mbglFeatureCollection {
+    mbgl::FeatureCollection featureCollection;
+    featureCollection.reserve(self.shapes.count);
+    for (id <MGLFeaturePrivate> feature in self.shapes) {
+        featureCollection.push_back([feature mbglFeature]);
+    }
+    return featureCollection;
 }
 
 @end
