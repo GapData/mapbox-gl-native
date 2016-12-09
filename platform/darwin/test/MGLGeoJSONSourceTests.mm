@@ -240,14 +240,10 @@
     
     MGLShapeCollectionFeature *shapeCollectionFeature = [MGLShapeCollectionFeature shapeCollectionWithShapes:@[polygonFeature, polylineFeature, multiPolygonFeature, multiPolylineFeature, pointCollectionFeature, pointFeature]];
 
-    MGLShapeCollectionFeature *shapeCollectionFeature_1 = [MGLShapeCollectionFeature shapeCollectionWithShapes:@[polygonFeature, polylineFeature, multiPolygonFeature, multiPolylineFeature, pointCollectionFeature, pointFeature, shapeCollectionFeature]];
-
-
-#warning Fix
-    MGLGeoJSONSource *source = [[MGLGeoJSONSource alloc] initWithIdentifier:@"source-id" shape:shapeCollectionFeature_1 options:nil];
+    MGLGeoJSONSource *source = [[MGLGeoJSONSource alloc] initWithIdentifier:@"source-id" shape:shapeCollectionFeature options:nil];
     MGLShapeCollectionFeature *shape = (MGLShapeCollectionFeature *)source.shape;
     XCTAssertNotNil(shape);
-    XCTAssert(shape.shapes.count == 7, @"Shape collection should contain 7 shapes");
+    XCTAssert(shape.shapes.count == 6, @"Shape collection should contain 6 shapes");
 }
 
 @end
