@@ -53,12 +53,23 @@
     XCTAssertTrue([collection.shapes.firstObject isMemberOfClass:[MGLPolylineFeature class]]);
 }
 
-- (void)testMGLGeoJSONSourceWithSingleFeature {
+- (void)testMGLGeoJSONSourceWithSingleGeometry {
     MGLGeoJSONSource *source = [[MGLGeoJSONSource alloc] initWithIdentifier:@"geojson"
                                                                 geoJSONData:[@"{\"type\": \"Point\", \"coordinates\": [0, 0]}" dataUsingEncoding:NSUTF8StringEncoding]
                                                                     options:nil];
     XCTAssertNotNil(source.shape);
     XCTAssert([source.shape isKindOfClass:[MGLPointFeature class]]);
+}
+
+- (void)testMGLGeoJSONSourceWithSingleFeature {
+    NSString *geoJSON = @"{\"type\": \"Feature\", \"properties\": {\"color\": \"green\"}, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ -114.06847000122069, 51.050459433092655 ] }}";
+    MGLGeoJSONSource *source = [[MGLGeoJSONSource alloc] initWithIdentifier:@"geojson"
+                                                                geoJSONData:[geoJSON dataUsingEncoding:NSUTF8StringEncoding]
+                                                                    options:nil];
+    XCTAssertNotNil(source.shape);
+    XCTAssert([source.shape isKindOfClass:[MGLPointFeature class]]);
+    MGLPointFeature *feature = (MGLPointFeature *)source.shape;
+    XCTAssert([feature.attributes.allKeys containsObject:@"color"]);
 }
 
 - (void)testMGLGeoJSONSourceWithPolylineFeatures {

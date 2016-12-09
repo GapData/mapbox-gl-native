@@ -954,10 +954,21 @@ typedef NS_ENUM(NSInteger, MBXSettingsMiscellaneousRows) {
     [self.mapView.style addSource:source];
     
     MGLFillStyleLayer *layer = [[MGLFillStyleLayer alloc] initWithIdentifier:@"leaf-fill-layer" source:source];
-    layer.predicate = [NSPredicate predicateWithFormat:@"color = %@", @"red"];
+    layer.predicate = [NSPredicate predicateWithFormat:@"color = 'red'"];
     MGLStyleValue *fillColor = [MGLStyleValue<UIColor *> valueWithRawValue:[UIColor redColor]];
     layer.fillColor = fillColor;
     [self.mapView.style addLayer:layer];
+
+    NSString *geoJSON = @"{\"type\": \"Feature\", \"properties\": {\"color\": \"green\"}, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ -114.06847000122069, 51.050459433092655 ] }}";
+
+    NSData *data = [geoJSON dataUsingEncoding:NSUTF8StringEncoding];
+    MGLGeoJSONSource *pointSource = [[MGLGeoJSONSource alloc] initWithIdentifier:@"leaf-point-source" geoJSONData:data options:nil];
+    [self.mapView.style addSource:pointSource];
+
+    MGLCircleStyleLayer *circleLayer = [[MGLCircleStyleLayer alloc] initWithIdentifier:@"leaf-circle-layer" source:pointSource];
+    circleLayer.circleColor = [MGLStyleValue valueWithRawValue:[UIColor greenColor]];
+    circleLayer.predicate = [NSPredicate predicateWithFormat:@"color = 'green'"];
+    [self.mapView.style addLayer:circleLayer];
 }
 
 - (void)updateGeoJSONSourceData

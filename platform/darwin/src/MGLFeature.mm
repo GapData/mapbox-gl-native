@@ -287,8 +287,7 @@ public:
     }
     
     MGLShape <MGLFeaturePrivate> * operator()(const mbgl::Feature &feature) const {
-        GeometryEvaluator<T> evaluator;
-        MGLShape <MGLFeaturePrivate> *shape = mapbox::geometry::geometry<T>::visit(feature.geometry, evaluator);
+        MGLShape <MGLFeaturePrivate> *shape = (MGLShape <MGLFeaturePrivate> *)MGLFeatureFromMBGLFeature(feature);
         return shape;
     }
     
