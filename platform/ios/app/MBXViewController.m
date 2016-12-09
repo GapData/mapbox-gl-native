@@ -969,6 +969,22 @@ typedef NS_ENUM(NSInteger, MBXSettingsMiscellaneousRows) {
     circleLayer.circleColor = [MGLStyleValue valueWithRawValue:[UIColor greenColor]];
     circleLayer.predicate = [NSPredicate predicateWithFormat:@"color = 'green'"];
     [self.mapView.style addLayer:circleLayer];
+
+
+    CLLocationCoordinate2D squareCoords[] = {
+        {51.056070541830934, -114.0274429321289},
+        {51.07937094724242, -114.0274429321289},
+        {51.07937094724242, -113.98761749267578},
+        {51.05607054183093, -113.98761749267578},
+        {51.056070541830934, -114.0274429321289},
+    };
+    MGLPolygon *polygon = [MGLPolygon polygonWithCoordinates:squareCoords count:sizeof(squareCoords)/sizeof(squareCoords[0])];
+    MGLGeoJSONSource *plainShapeSource = [[MGLGeoJSONSource alloc] initWithIdentifier:@"leaf-plain-shape-source" shape:polygon options:nil];
+    [self.mapView.style addSource:plainShapeSource];
+
+    MGLFillStyleLayer *plainFillLayer = [[MGLFillStyleLayer alloc] initWithIdentifier:@"leaf-plain-fill-layer" source:plainShapeSource];
+    plainFillLayer.fillColor = [MGLStyleValue valueWithRawValue:[UIColor yellowColor]];
+    [self.mapView.style addLayer:plainFillLayer];
 }
 
 - (void)updateGeoJSONSourceData
